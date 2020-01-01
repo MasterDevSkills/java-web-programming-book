@@ -1,14 +1,10 @@
-<%@ page import="com.bazlur.eshoppers.dto.ProductDTO" %>
-<%@ page import="java.util.List" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>All Products</title>
 </head>
 <body>
-
-<% List<ProductDTO> products
-        = (List<ProductDTO>) request.getAttribute("products");%>
 
 <table>
     <thead>
@@ -19,19 +15,19 @@
     </tr>
     </thead>
 
-    <% for (ProductDTO product : products) {%>
-    <tr>
-        <td>
-            <%= product.getName()%>
-        </td>
-        <td>
-            <%= product.getDescription()%>
-        </td>
-        <td>
-            <%= product.getPrice()%>
-        </td>
-    </tr>
-    <%}%>
+    <c:forEach var="product" items="${products}">
+        <tr>
+            <td>
+                <c:out value="${product.name}"/>
+            </td>
+            <td>
+                <c:out value="${product.description}"/>
+            </td>
+            <td>
+                <c:out value="${product.price}"/>
+            </td>
+        </tr>
+    </c:forEach>
 </table>
 
 </body>
