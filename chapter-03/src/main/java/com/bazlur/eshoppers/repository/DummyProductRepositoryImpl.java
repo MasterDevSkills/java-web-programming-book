@@ -1,7 +1,6 @@
 package com.bazlur.eshoppers.repository;
 
 import com.bazlur.eshoppers.dto.ProductDTO;
-import org.jsoup.Jsoup;
 
 import java.math.BigDecimal;
 import java.util.List;
