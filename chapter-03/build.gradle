@@ -17,6 +17,8 @@ dependencies {
 
     implementation 'jstl:jstl:1.2'
 
+    implementation 'org.webjars:bootstrap:4.4.1'
+
     testImplementation group: 'org.mockito', name: 'mockito-all', version: '1.9.5'
     testImplementation group: 'junit', name: 'junit', version: '4.12'
 }
