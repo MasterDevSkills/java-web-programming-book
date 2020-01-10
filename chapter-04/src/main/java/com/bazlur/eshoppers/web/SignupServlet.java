@@ -4,6 +4,7 @@ import com.bazlur.eshoppers.dto.UserDTO;
 import com.bazlur.eshoppers.repository.UserRepositoryImpl;
 import com.bazlur.eshoppers.service.UserService;
 import com.bazlur.eshoppers.service.UserServiceImpl;
+import com.bazlur.eshoppers.util.ValidationUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,7 +13,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 @WebServlet("/signup")
 public class SignupServlet extends HttpServlet {
@@ -31,13 +37,15 @@ public class SignupServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 					throws ServletException, IOException {
-		UserDTO userDTO = copyParametersTo(req);
+		var userDTO = copyParametersTo(req);
+		var errors = ValidationUtil.getInstance().validate(userDTO);
 
-		if (isValid(userDTO)) {
+		if (errors.isEmpty()) {
 			LOGGER.info("user is valid, creating a new user with: {}", userDTO);
 			userService.saveUser(userDTO);
 			resp.sendRedirect("/home");
 		} else {
+			req.setAttribute("errors", errors);
 			LOGGER.info("User sent invalid data: {}", userDTO);
 			req.getRequestDispatcher("/WEB-INF/signup.jsp").forward(req, resp);
 		}
@@ -54,9 +62,5 @@ public class SignupServlet extends HttpServlet {
 
 		return userDTO;
 	}
-
-	private boolean isValid(UserDTO userDTO) {
-		//we will implement it later
-		return true;
-	}
 }
+

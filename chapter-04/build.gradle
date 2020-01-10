@@ -20,6 +20,9 @@ dependencies {
     implementation 'org.webjars:bootstrap:4.4.1'
     implementation 'ch.qos.logback:logback-classic:1.2.3'
 
+    //bean validation
+    implementation 'org.hibernate.validator:hibernate-validator:6.1.0.Final'
+
     testImplementation group: 'org.mockito', name: 'mockito-all', version: '1.9.5'
     testImplementation group: 'junit', name: 'junit', version: '4.12'
 }
