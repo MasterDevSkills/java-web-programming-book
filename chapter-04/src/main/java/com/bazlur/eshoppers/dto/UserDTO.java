@@ -1,10 +1,16 @@
 package com.bazlur.eshoppers.dto;
 
-import javax.validation.constraints.Digits;
+import com.bazlur.eshoppers.util.PasswordEqual;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+@PasswordEqual(
+				first = "password",
+				second = "passwordConfirmed",
+				message = "password and confirm password do not match"
+)
 public class UserDTO {
 	@NotEmpty
 	@Size(min = 4, max = 32)
