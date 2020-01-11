@@ -9,6 +9,7 @@
         <div class="form-group">
             <label for="username">Username</label>
             <input type="text" class="form-control" id="username"
+                   value="${userDto.username}"
                    name="username"
             />
             <c:if test="${errors.username !=null}">
@@ -20,6 +21,7 @@
             <label for="email">Email</label>
             <input type="email" class="form-control" id="email"
                    name="email"
+                   value="${userDto.email}"
                    placeholder="you@example.com"/>
 
             <c:if test="${errors.email !=null}">
@@ -29,7 +31,8 @@
 
         <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" name="password">
+            <input type="password" class="form-control" id="password"
+                   name="password">
             <c:if test="${errors.password !=null}">
                 <small class="text-danger"> ${errors.password}</small>
             </c:if>
@@ -37,7 +40,8 @@
 
         <div class="form-group">
             <label for="passwordConfirmed">Password Confirmed</label>
-            <input type="password" class="form-control" id="passwordConfirmed"
+            <input type="password" class="form-control"
+                   id="passwordConfirmed"
                    name="passwordConfirmed">
             <c:if test="${errors.passwordConfirmed !=null}">
                 <small class="text-danger"> ${errors.passwordConfirmed}</small>
@@ -47,6 +51,7 @@
         <div class="form-group">
             <label for="email">First Name</label>
             <input type="text" class="form-control" id="firstName"
+                   value="${userDto.firstName}"
                    name="firstName"
             />
             <c:if test="${errors.firstName !=null}">
@@ -57,6 +62,7 @@
         <div class="form-group">
             <label for="email">Last Name</label>
             <input type="text" class="form-control" id="lastName"
+                   value="${userDto.lastName}"
                    name="lastName"
             />
             <c:if test="${errors.lastName !=null}">

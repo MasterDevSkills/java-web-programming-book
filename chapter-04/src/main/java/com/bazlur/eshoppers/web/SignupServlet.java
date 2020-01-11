@@ -36,12 +36,14 @@ public class SignupServlet extends HttpServlet {
 		var errors = ValidationUtil.getInstance().validate(userDTO);
 
 		if (!errors.isEmpty()) {
+			req.setAttribute("userDto", userDTO);
 			req.setAttribute("errors", errors);
 			LOGGER.info("User sent invalid data: {}", userDTO);
 			req.getRequestDispatcher("/WEB-INF/signup.jsp").forward(req, resp);
 		}else if (userService.isNotUniqueUsername(userDTO)){
 			LOGGER.info("Username: {} is already exist", userDTO.getUsername());
 			errors.put("username", "The username already exists. Please use a different username");
+			req.setAttribute("userDto", userDTO);
 			req.setAttribute("errors", errors);
 			req.getRequestDispatcher("/WEB-INF/signup.jsp").forward(req, resp);
 		} else {
