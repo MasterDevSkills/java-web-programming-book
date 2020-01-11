@@ -13,12 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 
 @WebServlet("/signup")
 public class SignupServlet extends HttpServlet {
@@ -40,14 +35,19 @@ public class SignupServlet extends HttpServlet {
 		var userDTO = copyParametersTo(req);
 		var errors = ValidationUtil.getInstance().validate(userDTO);
 
-		if (errors.isEmpty()) {
-			LOGGER.info("user is valid, creating a new user with: {}", userDTO);
-			userService.saveUser(userDTO);
-			resp.sendRedirect("/home");
-		} else {
+		if (!errors.isEmpty()) {
 			req.setAttribute("errors", errors);
 			LOGGER.info("User sent invalid data: {}", userDTO);
 			req.getRequestDispatcher("/WEB-INF/signup.jsp").forward(req, resp);
+		}else if (userService.isNotUniqueUsername(userDTO)){
+			LOGGER.info("Username: {} is already exist", userDTO.getUsername());
+			errors.put("username", "The username already exists. Please use a different username");
+			req.setAttribute("errors", errors);
+			req.getRequestDispatcher("/WEB-INF/signup.jsp").forward(req, resp);
+		} else {
+			LOGGER.info("user is valid, creating a new user with: {}", userDTO);
+			userService.saveUser(userDTO);
+			resp.sendRedirect("/home");
 		}
 	}
 

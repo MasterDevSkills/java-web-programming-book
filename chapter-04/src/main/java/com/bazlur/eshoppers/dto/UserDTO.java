@@ -5,6 +5,7 @@ import com.bazlur.eshoppers.util.PasswordEqual;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.StringJoiner;
 
 @PasswordEqual(
 				first = "password",
@@ -83,5 +84,17 @@ public class UserDTO {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	public String toString() {
+
+		return new StringJoiner(", ", UserDTO.class.getSimpleName() + "[", "]")
+						.add("username='" + username + "'")
+						.add("password='" + "*".repeat(password.length()) + "'")
+						.add("passwordConfirmed='" + "*".repeat(passwordConfirmed.length()) + "'")
+						.add("email='" + email + "'")
+						.add("firstName='" + firstName + "'")
+						.add("lastName='" + lastName + "'")
+						.toString();
 	}
 }
