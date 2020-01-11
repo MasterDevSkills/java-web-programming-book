@@ -3,7 +3,12 @@
 
 <div class="container">
     <div class="jumbotron">
-        <h1>Welcome to e-shoppers! </h1>
+        <c:if test="${sessionScope.user != null}">
+            <h1> Hello <c:out value="${sessionScope.user.firstName}"/>,
+                Welcome to e-shoppers!
+            </h1>
+        </c:if>
+
         <img src="<c:url value="/image/cart.jpg"/>" style="height: 200px"
              alt=""/>
     </div>
