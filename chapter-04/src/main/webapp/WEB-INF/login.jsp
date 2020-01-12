@@ -5,6 +5,14 @@
     <h2 class="h2">Log In</h2>
     <hr class="mb-4">
 
+    <div class="row">
+        <c:if test="${message!=null}">
+            <div class="alert alert-success">
+                    ${message}
+            </div>
+        </c:if>
+    </div>
+
     <form class="form-horizontal" role="form" action="<c:url value="/login"/>" method="post">
         <div class="form-group">
             <label for="username">Username</label>
