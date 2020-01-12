@@ -1,10 +1,11 @@
+<%@ taglib prefix="sec" uri="http://bazlur.com/functions" %>
 <%@include file="includes/header.jsp" %>
 <%@include file="includes/navigation.jsp" %>
 
 <div class="container">
     <div class="jumbotron">
-        <c:if test="${sessionScope.user != null}">
-            <h1> Hello <c:out value="${sessionScope.user.firstName}"/>,
+        <c:if test="${sec:isAuthenticated(pageContext.request)}">
+            <h1> Hello <c:out value="${sec:getCurrentUser(pageContext.request).firstName}"/>,
                 Welcome to e-shoppers!
             </h1>
         </c:if>

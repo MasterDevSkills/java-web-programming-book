@@ -6,6 +6,7 @@ import com.bazlur.eshoppers.exceptions.UserNotFoundException;
 import com.bazlur.eshoppers.repository.UserRepositoryImpl;
 import com.bazlur.eshoppers.service.UserService;
 import com.bazlur.eshoppers.service.UserServiceImpl;
+import com.bazlur.eshoppers.util.SecurityContext;
 import com.bazlur.eshoppers.util.ValidationUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,16 +65,8 @@ public class LoginServlet extends HttpServlet {
 
 	private void login(LoginDTO loginDTO, HttpServletRequest req)
 					throws UserNotFoundException {
-
 		User user = userService.verifyUser(loginDTO);
-		//get the old session and invalidate
-		HttpSession oldSession = req.getSession(false);
-		if (oldSession != null) {
-			oldSession.invalidate();
-		}
 
-		//put user in the sessions
-		HttpSession session = req.getSession(true);
-		session.setAttribute("user", user);
+		SecurityContext.login(req, user);
 	}
 }

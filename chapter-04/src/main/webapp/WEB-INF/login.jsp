@@ -29,6 +29,9 @@
             <button class="btn btn-primary btn-lg" type="submit">Login
             </button>
         </div>
+        <span> Don't have a user account?
+            <a class="btn-link" href="<c:url value="/signup"/>">SignUp </a></span>
+
     </form>
 </div>
 
