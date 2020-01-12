@@ -1,9 +1,7 @@
 package com.bazlur.eshoppers.web;
 
 import com.bazlur.eshoppers.dto.ProductDTO;
-import com.bazlur.eshoppers.repository.DummyProductRepositoryImpl;
-import com.bazlur.eshoppers.repository.UserRepository;
-import com.bazlur.eshoppers.repository.UserRepositoryImpl;
+import com.bazlur.eshoppers.repository.ProductRepositoryImpl;
 import com.bazlur.eshoppers.service.ProductService;
 import com.bazlur.eshoppers.service.ProductServiceImpl;
 import org.slf4j.Logger;
@@ -22,7 +20,7 @@ public class HomeServlet extends HttpServlet {
 	private static final Logger LOGGER = LoggerFactory.getLogger(HomeServlet.class);
 
 	private ProductService productService
-					= new ProductServiceImpl(new DummyProductRepositoryImpl());
+					= new ProductServiceImpl(new ProductRepositoryImpl());
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
