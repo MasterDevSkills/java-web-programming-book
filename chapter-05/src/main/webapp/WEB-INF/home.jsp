@@ -4,14 +4,38 @@
 
 <div class="container">
     <div class="jumbotron">
-        <c:if test="${sec:isAuthenticated(pageContext.request)}">
-            <h1> Hello <c:out value="${sec:getCurrentUser(pageContext.request).firstName}"/>,
-                Welcome to e-shoppers!
-            </h1>
-        </c:if>
+        <div class="row">
+            <div class="col-6">
+                <c:if test="${sec:isAuthenticated(pageContext.request)}">
+                    <h1> Hello <c:out value="${sec:getCurrentUser(pageContext.request).firstName}"/>,
+                        Welcome to e-shoppers!
+                    </h1>
+                </c:if>
 
-        <img src="<c:url value="/image/cart.jpg"/>" style="height: 200px"
-             alt=""/>
+                <img src="<c:url value="/image/cart.jpg"/>" style="height: 200px"
+                     alt=""/>
+
+            </div>
+            <div class="col-6 mb-4">
+                <c:if test="${cart != null && cart.cartItems.size() > 0}">
+                    <div class="card shadow-sm p-3 mb-5 bg-white">
+                        <div class="card-header">
+                            <h4> Your Cart</h4>
+                        </div>
+                        <div class="card-body">
+                            <p>
+                                Total Item: <span class='badge badge-pill badge-success'>
+                                        <c:out value="${cart.totalItem}"/> </span>
+                            </p>
+                            <p>
+                                Total Price: $ <c:out value="${cart.totalPrice}"/>
+                            </p>
+                            <p><a class="btn btn-outline-info" href="#">Checkout </a></p>
+                        </div>
+                    </div>
+                </c:if>
+            </div>
+        </div>
     </div>
 
     <div class="row">

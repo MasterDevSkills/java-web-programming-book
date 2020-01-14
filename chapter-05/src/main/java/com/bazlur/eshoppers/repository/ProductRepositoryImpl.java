@@ -5,6 +5,7 @@ import com.bazlur.eshoppers.domain.Product;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 public class ProductRepositoryImpl implements ProductRepository {
 
@@ -40,5 +41,13 @@ public class ProductRepositoryImpl implements ProductRepository {
 	public List<Product> findAllProducts() {
 
 		return ALL_PRODUCTS;
+	}
+
+	@Override
+	public Optional<Product> findById(Long productId) {
+
+		return findAllProducts().stream()
+						.filter(product -> product.getId().equals(productId))
+						.findFirst();
 	}
 }
