@@ -9,4 +9,6 @@ public interface CartRepository {
 	Optional<Cart> findByUser(User currentUser);
 
 	Cart save(Cart cart);
+
+	Cart update(Cart cart);
 }

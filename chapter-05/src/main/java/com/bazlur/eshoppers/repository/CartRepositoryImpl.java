@@ -22,4 +22,10 @@ public class CartRepositoryImpl implements CartRepository {
 
 		return CARTS.put(cart.getUser(), cart);
 	}
+
+	@Override
+	public Cart update(Cart cart) {
+
+		return CARTS.put(cart.getUser(), cart);
+	}
 }

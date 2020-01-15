@@ -29,6 +29,10 @@ public class CartServiceImpl implements CartService {
 
 	@Override
 	public Cart getCartByUser(User currentUser) {
+		if (currentUser == null) {
+			throw new IllegalArgumentException("current user cannot be null");
+		}
+
 		Optional<Cart> optionalCart = cartRepository.findByUser(currentUser);
 
 		return optionalCart
@@ -53,7 +57,7 @@ public class CartServiceImpl implements CartService {
 		cart.setTotalItem(totalTotalItem);
 		cart.setTotalPrice(totalPrice);
 
-		cartRepository.save(cart);
+		cartRepository.update(cart);
 	}
 
 	private void addProductToCart(Product product, Cart cart) {
