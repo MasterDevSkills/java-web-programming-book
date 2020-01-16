@@ -41,6 +41,14 @@
     </div>
 
     <div class="row">
+        <c:if test="${message != null}">
+            <div class="alert alert-success">
+                    ${message}
+            </div>
+        </c:if>
+    </div>
+
+    <div class="row">
         <c:forEach var="product" items="${products}">
             <div class="col-sm-4">
                 <div class="card h-100 mb-4">
