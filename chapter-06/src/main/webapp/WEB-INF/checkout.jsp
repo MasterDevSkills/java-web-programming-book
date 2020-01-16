@@ -24,9 +24,17 @@
                     </td>
                     <td>
                         <div class="btn-group" role="group">
-                            <a class="btn btn-outline-warning">-</a>
-                            <button type="button" class="btn"><c:out value="${cartItem.quantity}"/></button>
-                            <a class="btn btn-outline-success">+</a>
+                            <a class="btn btn-outline-warning"
+                               onclick="doAction(${cartItem.product.getId()}, 'remove')">
+                                -
+                            </a>
+                            <button type="button" class="btn">
+                                <c:out value="${cartItem.quantity}"/>
+                            </button>
+                            <a class="btn btn-outline-success"
+                               onclick="doAction(${cartItem.product.getId()}, 'add')">
+                                +
+                            </a>
                         </div>
                     </td>
                     <td>
@@ -65,5 +73,23 @@
     </div>
 
 </div>
+
+<script>
+    function doAction(productId, action) {
+
+        fetch("/add-to-cart", {
+            method: 'POST',
+            headers: {
+                "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+            },
+            body: "productId=" + productId + "&action=" + action
+        })
+            .then((response) => {
+                if (response.redirected) {
+                    window.location.replace(response.url);
+                }
+            });
+    }
+</script>
 
 <%@include file="includes/footer.jsp" %>

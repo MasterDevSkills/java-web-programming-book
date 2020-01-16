@@ -146,13 +146,7 @@ public class CartServiceImplTest {
 	public void testAddProductToCart_givenSimilarProductAlreadyInCart_shouldIncreaseCartItemQuantity() {
 		//arrange
 		when(productRepository.findById(anyLong())).thenReturn(Optional.of(TEST_PRODUCT));
-
-		CartItem cartItem = new CartItem();
-		cartItem.setProduct(TEST_PRODUCT);
-		cartItem.setQuantity(1);
-		cartItem.setPrice(TEST_PRODUCT.getPrice());
-
-		cart.getCartItems().add(cartItem);
+		cart.getCartItems().add(createCartItem());
 
 		ArgumentCaptor<Cart> argumentCaptor = ArgumentCaptor.forClass(Cart.class);
 
@@ -167,6 +161,74 @@ public class CartServiceImplTest {
 		assertThat(captorValue.getCartItems().size(), is(1));
 		assertThat(captorValue.getTotalItem(), is(2));
 		assertThat(captorValue.getTotalPrice(), is(TEST_PRODUCT.getPrice().multiply(BigDecimal.valueOf(2))));
+
+		verify(productRepository, times(1)).findById(anyLong());
+		verify(cartRepository, times(1)).update(any());
+		verify(cartItemRepository, times(1)).update(any());
+		verifyNoMoreInteractions(productRepository);
+		verifyNoMoreInteractions(cartItemRepository);
+		verifyNoMoreInteractions(cartRepository);
+	}
+
+	private CartItem createCartItem() {
+		CartItem cartItem = new CartItem();
+		cartItem.setProduct(TEST_PRODUCT);
+		cartItem.setQuantity(1);
+		cartItem.setPrice(TEST_PRODUCT.getPrice());
+
+		return cartItem;
+	}
+
+	@Test
+	public void testRemoveProductToCart_givenExistingCartWithProduct_shouldRemoveProductFromCart() {
+		//arrange
+		when(productRepository.findById(anyLong())).thenReturn(Optional.of(TEST_PRODUCT));
+		cart.getCartItems().add(createCartItem());
+
+		ArgumentCaptor<Cart> argumentCaptor = ArgumentCaptor.forClass(Cart.class);
+
+		doNothing().when(cartItemRepository).remove(any());
+		when(cartRepository.update(argumentCaptor.capture())).thenAnswer(invocation -> invocation.getArguments()[0]);
+
+		//act
+		cartService.removeProductToCart("1", cart);
+
+		//assert
+		Cart captorValue = argumentCaptor.getValue();
+		assertThat(captorValue.getCartItems().size(), is(0));
+		assertThat(captorValue.getTotalItem(), is(0));
+		assertThat(captorValue.getTotalPrice(), is(BigDecimal.ZERO));
+
+		verify(productRepository, times(1)).findById(anyLong());
+		verify(cartRepository, times(1)).update(any());
+		verify(cartItemRepository, times(1)).remove(any());
+		verifyNoMoreInteractions(productRepository);
+		verifyNoMoreInteractions(cartItemRepository);
+		verifyNoMoreInteractions(cartRepository);
+	}
+
+	@Test
+	public void testRemoveProductToCart_givenExistingCartWithMultipleSameProduct_shouldRemoveOneProductFromCart() {
+		//arrange
+		when(productRepository.findById(anyLong())).thenReturn(Optional.of(TEST_PRODUCT));
+		var cartItem = createCartItem();
+		cartItem.setQuantity(cartItem.getQuantity() + 1);
+		cartItem.setPrice(cartItem.getPrice().add(cartItem.getProduct().getPrice()));
+		cart.getCartItems().add(cartItem);
+
+		ArgumentCaptor<Cart> argumentCaptor = ArgumentCaptor.forClass(Cart.class);
+
+		when(cartItemRepository.update(any())).thenAnswer(invocation -> invocation.getArguments()[0]);
+		when(cartRepository.update(argumentCaptor.capture())).thenAnswer(invocation -> invocation.getArguments()[0]);
+
+		//act
+		cartService.removeProductToCart("1", cart);
+
+		//assert
+		Cart captorValue = argumentCaptor.getValue();
+		assertThat(captorValue.getCartItems().size(), is(1));
+		assertThat(captorValue.getTotalItem(), is(1));
+		assertThat(captorValue.getTotalPrice(), is(TEST_PRODUCT.getPrice()));
 
 		verify(productRepository, times(1)).findById(anyLong());
 		verify(cartRepository, times(1)).update(any());
