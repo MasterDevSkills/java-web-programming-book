@@ -30,7 +30,9 @@
                             <p>
                                 Total Price: $ <c:out value="${cart.totalPrice}"/>
                             </p>
-                            <p><a class="btn btn-outline-info" href="#">Checkout </a></p>
+                            <p><a class="btn btn-outline-info"
+                                  href="<c:url value="/checkout"/>">Checkout </a>
+                            </p>
                         </div>
                     </div>
                 </c:if>

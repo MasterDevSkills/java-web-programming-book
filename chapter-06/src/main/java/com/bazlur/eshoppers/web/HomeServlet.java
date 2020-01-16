@@ -1,6 +1,5 @@
 package com.bazlur.eshoppers.web;
 
-import com.bazlur.eshoppers.domain.Cart;
 import com.bazlur.eshoppers.dto.ProductDTO;
 import com.bazlur.eshoppers.repository.CartItemRepositoryImpl;
 import com.bazlur.eshoppers.repository.CartRepositoryImpl;
@@ -40,9 +39,12 @@ public class HomeServlet extends HttpServlet {
 		List<ProductDTO> allProducts = productService.findAllProductSortedByName();
 		LOGGER.info("Total product found {}", allProducts.size());
 
-		Cart cart = cartService.getCartByUser(SecurityContext.getCurrentUser(req));
+		if (SecurityContext.isAuthenticated(req)) {
+			var currentUser = SecurityContext.getCurrentUser(req);
+			var cart = cartService.getCartByUser(currentUser);
+			req.setAttribute("cart", cart);
+		}
 
-		req.setAttribute("cart", cart);
 		req.setAttribute("products", allProducts);
 
 		req.getRequestDispatcher("/WEB-INF/home.jsp")
