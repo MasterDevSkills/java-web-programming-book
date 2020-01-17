@@ -17,7 +17,7 @@ public class CartRepositoryImpl implements CartRepository {
 	public Optional<Cart> findByUser(User currentUser) {
 
 		var carts = CARTS.get(currentUser);
-		if (!carts.isEmpty()) {
+		if (carts != null && !carts.isEmpty()) {
 
 			Cart cart = (Cart) carts.toArray()[carts.size() - 1];
 			return Optional.of(cart);
@@ -46,11 +46,12 @@ public class CartRepositoryImpl implements CartRepository {
 
 	@Override
 	public Cart update(Cart cart) {
-		CARTS.computeIfAbsent(cart.getUser(),
-						user -> {
-							var carts = new LinkedHashSet<Cart>();
-							carts.add(cart);
-							return carts;
+		CARTS.computeIfPresent(cart.getUser(),
+						(user, carts) -> {
+							Cart[] objects = carts.toArray(Cart[]::new);
+							objects[objects.length - 1] = cart;
+
+							return new LinkedHashSet<>(Arrays.asList(objects));
 						});
 
 		return cart;
