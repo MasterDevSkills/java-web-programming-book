@@ -20,6 +20,10 @@ dependencies {
     implementation 'org.webjars:bootstrap:4.4.1'
     implementation 'ch.qos.logback:logback-classic:1.2.3'
 
+    //jdbc
+    implementation 'mysql:mysql-connector-java:8.0.18'
+    implementation 'com.zaxxer:HikariCP:3.4.1'
+
     //bean validation
     implementation 'org.hibernate.validator:hibernate-validator:6.1.0.Final'
 
