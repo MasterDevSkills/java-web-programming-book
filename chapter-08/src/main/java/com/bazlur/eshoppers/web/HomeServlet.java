@@ -3,6 +3,7 @@ package com.bazlur.eshoppers.web;
 import com.bazlur.eshoppers.dto.ProductDTO;
 import com.bazlur.eshoppers.repository.CartItemRepositoryImpl;
 import com.bazlur.eshoppers.repository.CartRepositoryImpl;
+import com.bazlur.eshoppers.repository.JdbcProductRepositoryImpl;
 import com.bazlur.eshoppers.repository.ProductRepositoryImpl;
 import com.bazlur.eshoppers.service.CartService;
 import com.bazlur.eshoppers.service.CartServiceImpl;
@@ -28,7 +29,7 @@ public class HomeServlet extends HttpServlet {
 					= new ProductServiceImpl(new ProductRepositoryImpl());
 
 	private CartService cartService
-					= new CartServiceImpl(new CartRepositoryImpl(), new ProductRepositoryImpl(),
+					= new CartServiceImpl(new CartRepositoryImpl(), new JdbcProductRepositoryImpl(),
 					new CartItemRepositoryImpl());
 
 	@Override
