@@ -4,20 +4,11 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Cart {
-	private Long id;
+public class Cart extends Domain {
 	private Set<CartItem> cartItems = new HashSet<>();
 	private BigDecimal totalPrice;
 	private Integer totalItem;
 	private User user;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public Set<CartItem> getCartItems() {
 		return cartItems;
