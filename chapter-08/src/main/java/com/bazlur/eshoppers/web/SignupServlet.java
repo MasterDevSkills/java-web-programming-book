@@ -1,7 +1,7 @@
 package com.bazlur.eshoppers.web;
 
 import com.bazlur.eshoppers.dto.UserDTO;
-import com.bazlur.eshoppers.repository.UserRepositoryImpl;
+import com.bazlur.eshoppers.repository.JdbcUserRepositoryImpl;
 import com.bazlur.eshoppers.service.UserService;
 import com.bazlur.eshoppers.service.UserServiceImpl;
 import com.bazlur.eshoppers.util.ValidationUtil;
@@ -19,7 +19,8 @@ import java.io.IOException;
 public class SignupServlet extends HttpServlet {
 	private final static Logger LOGGER = LoggerFactory.getLogger(SignupServlet.class);
 
-	private UserService userService = new UserServiceImpl(new UserRepositoryImpl());
+	private UserService userService
+					= new UserServiceImpl(new JdbcUserRepositoryImpl());
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -40,7 +41,7 @@ public class SignupServlet extends HttpServlet {
 			req.setAttribute("errors", errors);
 			LOGGER.info("User sent invalid data: {}", userDTO);
 			req.getRequestDispatcher("/WEB-INF/signup.jsp").forward(req, resp);
-		}else if (userService.isNotUniqueUsername(userDTO)){
+		} else if (userService.isNotUniqueUsername(userDTO)) {
 			LOGGER.info("Username: {} is already exist", userDTO.getUsername());
 			errors.put("username", "The username already exists. Please use a different username");
 			req.setAttribute("userDto", userDTO);

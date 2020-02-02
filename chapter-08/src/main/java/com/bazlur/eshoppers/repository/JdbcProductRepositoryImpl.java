@@ -16,6 +16,7 @@ import java.util.Optional;
 public class JdbcProductRepositoryImpl implements ProductRepository {
 	private static final Logger LOGGER
 					= LoggerFactory.getLogger(JdbcProductRepositoryImpl.class);
+
 	private DataSource dataSource
 					= ConnectionPool.getInstance().getDataSource();
 

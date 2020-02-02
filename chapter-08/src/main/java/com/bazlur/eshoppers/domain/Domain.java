@@ -6,8 +6,8 @@ import java.time.LocalDateTime;
 public abstract class Domain {
 	private Long version;
 	private Long id;
-	private LocalDateTime dateCreated;
-	private LocalDateTime dateLastUpdated;
+	private LocalDateTime dateCreated = LocalDateTime.now();
+	private LocalDateTime dateLastUpdated = LocalDateTime.now();
 
 	public Long getVersion() {
 		return version;

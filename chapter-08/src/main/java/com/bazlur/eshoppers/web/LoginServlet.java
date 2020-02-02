@@ -3,7 +3,7 @@ package com.bazlur.eshoppers.web;
 import com.bazlur.eshoppers.domain.User;
 import com.bazlur.eshoppers.dto.LoginDTO;
 import com.bazlur.eshoppers.exceptions.UserNotFoundException;
-import com.bazlur.eshoppers.repository.UserRepositoryImpl;
+import com.bazlur.eshoppers.repository.JdbcUserRepositoryImpl;
 import com.bazlur.eshoppers.service.UserService;
 import com.bazlur.eshoppers.service.UserServiceImpl;
 import com.bazlur.eshoppers.util.SecurityContext;
@@ -23,7 +23,7 @@ public class LoginServlet extends HttpServlet {
 	private static final Logger LOGGER = LoggerFactory.getLogger(LoginServlet.class);
 
 	private UserService userService
-					= new UserServiceImpl(new UserRepositoryImpl());
+					= new UserServiceImpl(new JdbcUserRepositoryImpl());
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
