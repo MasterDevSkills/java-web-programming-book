@@ -3,33 +3,11 @@ package com.bazlur.eshoppers.domain;
 import java.util.Objects;
 
 public class User extends Domain {
-	private Long id;
-	private Long version;
 	private String username;
 	private String password;
 	private String email;
 	private String firstName;
 	private String lastName;
-
-	@Override
-	public Long getId() {
-		return id;
-	}
-
-	@Override
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	@Override
-	public Long getVersion() {
-		return version;
-	}
-
-	@Override
-	public void setVersion(Long version) {
-		this.version = version;
-	}
 
 	public String getUsername() {
 		return username;

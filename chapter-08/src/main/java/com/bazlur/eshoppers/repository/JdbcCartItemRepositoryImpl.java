@@ -10,6 +10,7 @@ import java.util.Optional;
 
 public class JdbcCartItemRepositoryImpl implements CartItemRepository {
 	private JDBCTemplate jdbcTemplate = new JDBCTemplate();
+	private ProductRepository productRepository = new ProductRepositoryImpl();
 
 	private static final String INSERT_CART_ITEM = "INSERT INTO cart_item (" +
 					" quantity, " +
@@ -17,8 +18,9 @@ public class JdbcCartItemRepositoryImpl implements CartItemRepository {
 					" product_id, " +
 					" version, " +
 					" date_created, " +
-					" date_last_updated) " +
-					"VALUES (?,?,?,?,?,?)";
+					" date_last_updated, " +
+					" cart_id) " +
+					"VALUES (?,?,?,?,?,?,?)";
 
 	public static final String UPDATE_CART_ITEM = "UPDATE cart_item " +
 					"SET quantity = ?, " +
@@ -48,7 +50,8 @@ public class JdbcCartItemRepositoryImpl implements CartItemRepository {
 						cartItem.getProduct().getId(),
 						0L,
 						cartItem.getDateCreated(),
-						cartItem.getDateLastUpdated());
+						cartItem.getDateLastUpdated(),
+						cartItem.getCart().getId());
 		cartItem.setId(cartItemId);
 
 		return cartItem;
@@ -71,7 +74,6 @@ public class JdbcCartItemRepositoryImpl implements CartItemRepository {
 
 		cartItemToUpdate.setDateLastUpdated(LocalDateTime.now());
 		cartItemToUpdate.setVersion(cartItem.getVersion());
-		cartItemToUpdate.setProduct(cartItem.getProduct());
 		cartItemToUpdate.setQuantity(cartItem.getQuantity());
 		cartItemToUpdate.setPrice(cartItem.getPrice());
 
@@ -80,14 +82,13 @@ public class JdbcCartItemRepositoryImpl implements CartItemRepository {
 						cartItemToUpdate.getPrice(),
 						cartItemToUpdate.getVersion(),
 						cartItemToUpdate.getDateLastUpdated(),
-						cartItemToUpdate.getDateLastUpdated(),
 						cartItemToUpdate.getId());
 
 		return cartItemToUpdate;
 	}
 
 	private Optional<CartItem> findOne(Long id) {
-		var cartItems = jdbcTemplate.queryForObjectById(SELECT_CART_ITEM,
+		var cartItems = jdbcTemplate.queryForObject(SELECT_CART_ITEM,
 						id, resultSet -> {
 							var cartItem = new CartItem();
 							cartItem.setId(resultSet.getLong("id"));
@@ -98,6 +99,11 @@ public class JdbcCartItemRepositoryImpl implements CartItemRepository {
 											.toLocalDateTime());
 							cartItem.setDateLastUpdated(resultSet.getTimestamp("date_last_updated")
 											.toLocalDateTime());
+							var productId = resultSet.getLong("product_id");
+
+							productRepository.findById(productId)
+											.ifPresent(cartItem::setProduct);
+
 							return cartItem;
 						});
 

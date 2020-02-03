@@ -2,9 +2,9 @@ package com.bazlur.eshoppers.web;
 
 import com.bazlur.eshoppers.domain.Cart;
 import com.bazlur.eshoppers.domain.User;
-import com.bazlur.eshoppers.repository.CartItemRepositoryImpl;
-import com.bazlur.eshoppers.repository.CartRepositoryImpl;
-import com.bazlur.eshoppers.repository.ProductRepositoryImpl;
+import com.bazlur.eshoppers.repository.JdbcCartItemRepositoryImpl;
+import com.bazlur.eshoppers.repository.JdbcCartRepositoryImpl;
+import com.bazlur.eshoppers.repository.JdbcProductRepositoryImpl;
 import com.bazlur.eshoppers.service.Action;
 import com.bazlur.eshoppers.service.CartService;
 import com.bazlur.eshoppers.service.CartServiceImpl;
@@ -24,9 +24,9 @@ public class CartServlet extends HttpServlet {
 	private static final Logger LOGGER = LoggerFactory.getLogger(CartServlet.class);
 
 	private CartService cartService
-					= new CartServiceImpl(new CartRepositoryImpl(),
-					new ProductRepositoryImpl(),
-					new CartItemRepositoryImpl());
+					= new CartServiceImpl(new JdbcCartRepositoryImpl(),
+					new JdbcProductRepositoryImpl(),
+					new JdbcCartItemRepositoryImpl());
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)

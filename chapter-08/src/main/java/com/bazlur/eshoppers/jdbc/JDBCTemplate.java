@@ -69,13 +69,13 @@ public class JDBCTemplate {
 		}
 	}
 
-	public <E> List<E> queryForObjectById(String query, Long primaryKey,
-																				ObjectRowMapper<E> objectRowMapper) {
+	public <E> List<E> queryForObject(String query, Long primaryKey,
+																		ObjectRowMapper<E> objectRowMapper) {
 		try (var connection = dataSource.getConnection();
 				 var statement = connection.prepareStatement(query)) {
 
 			statement.setLong(1, primaryKey);
-			var resultSet = statement.executeQuery(query);
+			var resultSet = statement.executeQuery();
 			List<E> listOfE = new ArrayList<>();
 
 			while (resultSet.next()) {
@@ -89,8 +89,8 @@ public class JDBCTemplate {
 		}
 	}
 
-	public <E> List<E> queryForObjectById(String query,
-																				ObjectRowMapper<E> objectRowMapper) {
+	public <E> List<E> queryForObject(String query,
+																		ObjectRowMapper<E> objectRowMapper) {
 
 		try (var connection = dataSource.getConnection();
 				 var statement = connection.prepareStatement(query)) {

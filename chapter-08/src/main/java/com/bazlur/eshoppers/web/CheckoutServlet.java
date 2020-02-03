@@ -1,8 +1,6 @@
 package com.bazlur.eshoppers.web;
 
-import com.bazlur.eshoppers.repository.CartItemRepositoryImpl;
-import com.bazlur.eshoppers.repository.CartRepositoryImpl;
-import com.bazlur.eshoppers.repository.ProductRepositoryImpl;
+import com.bazlur.eshoppers.repository.*;
 import com.bazlur.eshoppers.service.CartService;
 import com.bazlur.eshoppers.service.CartServiceImpl;
 import com.bazlur.eshoppers.util.SecurityContext;
@@ -21,9 +19,9 @@ public class CheckoutServlet extends HttpServlet {
 	private static final Logger LOGGER = LoggerFactory.getLogger(CheckoutServlet.class);
 
 	private CartService cartService
-					= new CartServiceImpl(new CartRepositoryImpl(),
-					new ProductRepositoryImpl(),
-					new CartItemRepositoryImpl());
+					= new CartServiceImpl(new JdbcCartRepositoryImpl(),
+					new JdbcProductRepositoryImpl(),
+					new JdbcCartItemRepositoryImpl());
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
