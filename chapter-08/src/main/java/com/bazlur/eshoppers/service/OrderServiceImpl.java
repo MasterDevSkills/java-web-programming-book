@@ -28,7 +28,9 @@ public class OrderServiceImpl implements OrderService {
 		var savedShippingAddress = shippingAddressRepository.save(shippingAddress);
 
 		var cart = cartRepository.findByUser(currentUser)
-						.orElseThrow(() -> new CartItemNotFoundException("Cart Not found by current users"));
+						.orElseThrow(() ->
+										new CartItemNotFoundException(
+														"Cart Not found by current users"));
 
 		Order order = new Order();
 		order.setCart(cart);

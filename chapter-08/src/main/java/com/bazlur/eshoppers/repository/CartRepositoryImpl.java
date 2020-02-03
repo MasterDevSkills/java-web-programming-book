@@ -77,4 +77,10 @@ public class CartRepositoryImpl implements CartRepository {
 
 		return cart;
 	}
+
+	@Override
+	public Optional<Cart> findOne(long cartId) {
+
+		return Optional.empty();
+	}
 }

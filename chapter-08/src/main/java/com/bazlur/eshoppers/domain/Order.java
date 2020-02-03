@@ -2,22 +2,12 @@ package com.bazlur.eshoppers.domain;
 
 import java.time.LocalDateTime;
 
-public class Order {
-	private  Long id;
+public class Order extends Domain {
 	private Cart cart;
 	private ShippingAddress shippingAddress;
 	private LocalDateTime shippingDate;
-	private Payment payment;
 	private boolean shipped;
 	private User user;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public Cart getCart() {
 		return cart;
@@ -41,14 +31,6 @@ public class Order {
 
 	public void setShippingDate(LocalDateTime shippingDate) {
 		this.shippingDate = shippingDate;
-	}
-
-	public Payment getPayment() {
-		return payment;
-	}
-
-	public void setPayment(Payment payment) {
-		this.payment = payment;
 	}
 
 	public boolean isShipped() {

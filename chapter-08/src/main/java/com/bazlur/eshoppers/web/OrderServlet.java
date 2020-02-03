@@ -29,9 +29,9 @@ public class OrderServlet extends HttpServlet {
 												new JdbcCartItemRepositoryImpl());
 
 	private OrderService orderService
-					= new OrderServiceImpl(new OrderRepositoryImpl(),
-							new ShippingAddressRepositoryImpl(),
-										new CartRepositoryImpl());
+					= new OrderServiceImpl(new JdbcOrderRepositoryImpl(),
+							new JdbcShippingAddressRepositoryImpl(),
+										new JdbcCartRepositoryImpl());
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)

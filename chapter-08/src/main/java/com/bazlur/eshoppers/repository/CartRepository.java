@@ -11,4 +11,6 @@ public interface CartRepository {
 	Cart save(Cart cart);
 
 	Cart update(Cart cart);
+
+	Optional<Cart> findOne(long cartId);
 }

@@ -1,21 +1,12 @@
 package com.bazlur.eshoppers.domain;
 
-public class ShippingAddress {
-	private Long id;
+public class ShippingAddress extends Domain {
 	private String address;
 	private String address2;
 	private String state;
 	private String zip;
 	private String country;
 	private String mobileNumber;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public String getAddress() {
 		return address;
