@@ -69,12 +69,12 @@ public class JDBCTemplate {
 		}
 	}
 
-	public <E> List<E> queryForObject(String query, Long primaryKey,
+	public <E> List<E> queryForObject(String query, Object param,
 																		ObjectRowMapper<E> objectRowMapper) {
 		try (var connection = dataSource.getConnection();
 				 var statement = connection.prepareStatement(query)) {
 
-			statement.setLong(1, primaryKey);
+			addParameters(statement, new Object[]{param});
 			var resultSet = statement.executeQuery();
 			List<E> listOfE = new ArrayList<>();
 
