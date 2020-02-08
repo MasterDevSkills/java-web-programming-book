@@ -22,7 +22,7 @@ public final class ConnectionPool {
 						= dbProp.getString("db.max.connections");
 		config.setMaximumPoolSize(Integer.parseInt(maxPoolSize));
 
-		// performance senstive settings
+		// performance sensitive settings
 		config.setMinimumIdle(0);
 		config.setConnectionTimeout(30000);
 		config.setIdleTimeout(35000);
