@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public class JdbcCartItemRepositoryImpl implements CartItemRepository {
 	private JDBCTemplate jdbcTemplate = new JDBCTemplate();
-	private ProductRepository productRepository = new ProductRepositoryImpl();
+	private ProductRepository productRepository = new JdbcProductRepositoryImpl();
 
 	private static final String INSERT_CART_ITEM = "INSERT INTO cart_item (" +
 					" quantity, " +

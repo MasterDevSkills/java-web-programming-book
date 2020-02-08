@@ -23,7 +23,7 @@ public class HomeServlet extends HttpServlet {
 	private static final Logger LOGGER = LoggerFactory.getLogger(HomeServlet.class);
 
 	private ProductService productService
-					= new ProductServiceImpl(new ProductRepositoryImpl());
+					= new ProductServiceImpl(new JdbcProductRepositoryImpl());
 
 	private CartService cartService
 					= new CartServiceImpl(new JdbcCartRepositoryImpl(),

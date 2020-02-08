@@ -24,7 +24,7 @@ public class JdbcCartRepositoryImpl implements CartRepository {
 					" version, " +
 					" date_created, " +
 					" date_last_updated, " +
-					" user_id) VALUES (?,?,?,?,?,?,?)";
+					" user_id) VALUES (?,?,?,?,?,?)";
 
 	public static final String FIND_BY_USER = "SELECT c.*" +
 					" FROM cart c" +

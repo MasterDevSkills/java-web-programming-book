@@ -46,7 +46,7 @@ public class JDBCTemplate {
 		try (var connection = dataSource.getConnection();
 				 var preparedStatement
 								 = connection.prepareStatement(query,
-								 Statement.RETURN_GENERATED_KEYS)) {
+						Statement.RETURN_GENERATED_KEYS)) {
 			addParameters(preparedStatement, parameters);
 
 			final int affectedRows = preparedStatement.executeUpdate();

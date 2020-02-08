@@ -12,7 +12,7 @@ public class JdbcOrderRepositoryImpl implements OrderRepository {
 	private CartRepository cartRepository
 					= new JdbcCartRepositoryImpl();
 	private ShippingAddressRepository shippingAddressRepository
-					= new ShippingAddressRepositoryImpl();
+					= new JdbcShippingAddressRepositoryImpl();
 
 	public static final String FIND_ORDER_BY_USER = "SELECT id" +
 					", shipping_address_id" +

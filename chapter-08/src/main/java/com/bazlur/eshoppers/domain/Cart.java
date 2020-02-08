@@ -6,8 +6,8 @@ import java.util.Set;
 
 public class Cart extends Domain {
 	private Set<CartItem> cartItems = new HashSet<>();
-	private BigDecimal totalPrice;
-	private Integer totalItem;
+	private BigDecimal totalPrice = BigDecimal.ZERO;
+	private Integer totalItem = 0;
 	private User user;
 
 	public Set<CartItem> getCartItems() {
