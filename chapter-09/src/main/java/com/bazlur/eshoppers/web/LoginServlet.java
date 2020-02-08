@@ -3,14 +3,13 @@ package com.bazlur.eshoppers.web;
 import com.bazlur.eshoppers.domain.User;
 import com.bazlur.eshoppers.dto.LoginDTO;
 import com.bazlur.eshoppers.exceptions.UserNotFoundException;
-import com.bazlur.eshoppers.repository.JdbcUserRepositoryImpl;
 import com.bazlur.eshoppers.service.UserService;
-import com.bazlur.eshoppers.service.UserServiceImpl;
 import com.bazlur.eshoppers.util.SecurityContext;
 import com.bazlur.eshoppers.util.ValidationUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,8 +21,8 @@ import java.io.IOException;
 public class LoginServlet extends HttpServlet {
 	private static final Logger LOGGER = LoggerFactory.getLogger(LoginServlet.class);
 
-	private UserService userService
-					= new UserServiceImpl(new JdbcUserRepositoryImpl());
+	@Inject
+	private UserService userService;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)

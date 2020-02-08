@@ -4,15 +4,20 @@ import com.bazlur.eshoppers.domain.Order;
 import com.bazlur.eshoppers.domain.User;
 import com.bazlur.eshoppers.jdbc.JDBCTemplate;
 
+import javax.inject.Inject;
 import java.util.HashSet;
 import java.util.Set;
 
 public class JdbcOrderRepositoryImpl implements OrderRepository {
-	private JDBCTemplate jdbcTemplate = new JDBCTemplate();
-	private CartRepository cartRepository
-					= new JdbcCartRepositoryImpl();
-	private ShippingAddressRepository shippingAddressRepository
-					= new JdbcShippingAddressRepositoryImpl();
+	@Inject
+	private JDBCTemplate jdbcTemplate;
+
+	@Inject
+	private CartRepository cartRepository;
+	//= new JdbcCartRepositoryImpl();
+	@Inject
+	private ShippingAddressRepository shippingAddressRepository;
+	//= new JdbcShippingAddressRepositoryImpl();
 
 	public static final String FIND_ORDER_BY_USER = "SELECT id" +
 					", shipping_address_id" +

@@ -7,6 +7,7 @@ import com.bazlur.eshoppers.exceptions.CartNotFoundException;
 import com.bazlur.eshoppers.exceptions.OptimisticLockingFailureException;
 import com.bazlur.eshoppers.jdbc.JDBCTemplate;
 
+import javax.inject.Inject;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -15,8 +16,11 @@ import java.util.Optional;
 
 public class JdbcCartRepositoryImpl implements CartRepository {
 
-	private JDBCTemplate jdbcTemplate = new JDBCTemplate();
-	private ProductRepository productRepository = new JdbcProductRepositoryImpl();
+	@Inject
+	private JDBCTemplate jdbcTemplate;
+
+	@Inject
+	private ProductRepository productRepository;
 
 	private static final String INSERT_CART = "INSERT INTO cart (" +
 					" total_price, " +

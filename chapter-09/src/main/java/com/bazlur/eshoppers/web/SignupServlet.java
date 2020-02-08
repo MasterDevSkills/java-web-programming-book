@@ -1,13 +1,12 @@
 package com.bazlur.eshoppers.web;
 
 import com.bazlur.eshoppers.dto.UserDTO;
-import com.bazlur.eshoppers.repository.JdbcUserRepositoryImpl;
 import com.bazlur.eshoppers.service.UserService;
-import com.bazlur.eshoppers.service.UserServiceImpl;
 import com.bazlur.eshoppers.util.ValidationUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,8 +18,9 @@ import java.io.IOException;
 public class SignupServlet extends HttpServlet {
 	private final static Logger LOGGER = LoggerFactory.getLogger(SignupServlet.class);
 
-	private UserService userService
-					= new UserServiceImpl(new JdbcUserRepositoryImpl());
+	@Inject
+	private UserService userService;
+
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)

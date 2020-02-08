@@ -19,7 +19,10 @@ dependencies {
 
     implementation 'org.webjars:bootstrap:4.4.1'
     implementation 'ch.qos.logback:logback-classic:1.2.3'
-    
+
+    //CDI
+    implementation 'org.jboss.weld.servlet:weld-servlet:2.4.8.Final'
+
     //jdbc
     implementation 'mysql:mysql-connector-java:8.0.18'
     implementation 'com.zaxxer:HikariCP:3.4.1'

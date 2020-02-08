@@ -3,21 +3,13 @@ package com.bazlur.eshoppers.jdbc;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
+import javax.enterprise.inject.Produces;
 import javax.sql.DataSource;
 import java.util.ResourceBundle;
 
 public final class ConnectionPool {
 
-	private static final ConnectionPool INSTANCE
-					= new ConnectionPool();
-
-	private ConnectionPool() {
-	}
-
-	public static ConnectionPool getInstance() {
-		return INSTANCE;
-	}
-
+	@Produces
 	public DataSource getDataSource() {
 		var dbProp = ResourceBundle.getBundle("db");
 

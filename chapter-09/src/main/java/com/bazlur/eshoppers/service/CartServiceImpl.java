@@ -12,6 +12,7 @@ import com.bazlur.eshoppers.repository.ProductRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.inject.Inject;
 import java.math.BigDecimal;
 import java.util.Optional;
 
@@ -22,6 +23,7 @@ public class CartServiceImpl implements CartService {
 	private final ProductRepository productRepository;
 	private final CartItemRepository cartItemRepository;
 
+	@Inject
 	public CartServiceImpl(CartRepository cartRepository, ProductRepository productRepository, CartItemRepository cartItemRepository) {
 		this.cartRepository = cartRepository;
 		this.productRepository = productRepository;

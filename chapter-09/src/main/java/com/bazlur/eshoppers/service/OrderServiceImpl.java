@@ -9,11 +9,14 @@ import com.bazlur.eshoppers.repository.CartRepository;
 import com.bazlur.eshoppers.repository.OrderRepository;
 import com.bazlur.eshoppers.repository.ShippingAddressRepository;
 
+import javax.inject.Inject;
+
 public class OrderServiceImpl implements OrderService {
 	private OrderRepository orderRepository;
 	private ShippingAddressRepository shippingAddressRepository;
 	private CartRepository cartRepository;
 
+	@Inject
 	public OrderServiceImpl(OrderRepository orderRepository,
 													ShippingAddressRepository shippingAddressRepository,
 													CartRepository cartRepository) {

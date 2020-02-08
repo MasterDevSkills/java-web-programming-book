@@ -1,12 +1,11 @@
 package com.bazlur.eshoppers.web;
 
-import com.bazlur.eshoppers.repository.*;
 import com.bazlur.eshoppers.service.CartService;
-import com.bazlur.eshoppers.service.CartServiceImpl;
 import com.bazlur.eshoppers.util.SecurityContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,10 +17,8 @@ import java.io.IOException;
 public class CheckoutServlet extends HttpServlet {
 	private static final Logger LOGGER = LoggerFactory.getLogger(CheckoutServlet.class);
 
-	private CartService cartService
-					= new CartServiceImpl(new JdbcCartRepositoryImpl(),
-					new JdbcProductRepositoryImpl(),
-					new JdbcCartItemRepositoryImpl());
+	@Inject
+	private CartService cartService;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)

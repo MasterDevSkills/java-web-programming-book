@@ -1,10 +1,10 @@
 package com.bazlur.eshoppers.repository;
 
 import com.bazlur.eshoppers.domain.Product;
-import com.bazlur.eshoppers.jdbc.ConnectionPool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.inject.Inject;
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,8 +17,8 @@ public class JdbcProductRepositoryImpl implements ProductRepository {
 	private static final Logger LOGGER
 					= LoggerFactory.getLogger(JdbcProductRepositoryImpl.class);
 
-	private DataSource dataSource
-					= ConnectionPool.getInstance().getDataSource();
+	@Inject
+	private DataSource dataSource;
 
 	private static final String SELECT_ALL_PRODUCTS
 					= "select * from product";

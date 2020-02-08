@@ -6,6 +6,7 @@ import com.bazlur.eshoppers.dto.UserDTO;
 import com.bazlur.eshoppers.exceptions.UserNotFoundException;
 import com.bazlur.eshoppers.repository.UserRepository;
 
+import javax.inject.Inject;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -14,6 +15,7 @@ public class UserServiceImpl implements UserService {
 
 	private UserRepository userRepository;
 
+	@Inject
 	public UserServiceImpl(UserRepository userRepository) {
 		this.userRepository = userRepository;
 	}

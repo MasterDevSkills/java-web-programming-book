@@ -3,10 +3,13 @@ package com.bazlur.eshoppers.repository;
 import com.bazlur.eshoppers.domain.ShippingAddress;
 import com.bazlur.eshoppers.jdbc.JDBCTemplate;
 
+import javax.inject.Inject;
 import java.util.Optional;
 
 public class JdbcShippingAddressRepositoryImpl implements ShippingAddressRepository {
-	private JDBCTemplate jdbcTemplate = new JDBCTemplate();
+
+	@Inject
+	private JDBCTemplate jdbcTemplate;
 
 	private final static String INSERT_SHIPPING_ADDRESS
 					= "INSERT INTO shipping_address ( " +

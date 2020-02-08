@@ -1,15 +1,13 @@
 package com.bazlur.eshoppers.web;
 
 import com.bazlur.eshoppers.dto.ProductDTO;
-import com.bazlur.eshoppers.repository.*;
 import com.bazlur.eshoppers.service.CartService;
-import com.bazlur.eshoppers.service.CartServiceImpl;
 import com.bazlur.eshoppers.service.ProductService;
-import com.bazlur.eshoppers.service.ProductServiceImpl;
 import com.bazlur.eshoppers.util.SecurityContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,13 +20,11 @@ import java.util.List;
 public class HomeServlet extends HttpServlet {
 	private static final Logger LOGGER = LoggerFactory.getLogger(HomeServlet.class);
 
-	private ProductService productService
-					= new ProductServiceImpl(new JdbcProductRepositoryImpl());
+	@Inject
+	private ProductService productService;
 
-	private CartService cartService
-					= new CartServiceImpl(new JdbcCartRepositoryImpl(),
-					new JdbcProductRepositoryImpl(),
-					new JdbcCartItemRepositoryImpl());
+	@Inject
+	private CartService cartService;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)

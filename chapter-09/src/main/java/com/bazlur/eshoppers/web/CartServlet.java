@@ -2,17 +2,14 @@ package com.bazlur.eshoppers.web;
 
 import com.bazlur.eshoppers.domain.Cart;
 import com.bazlur.eshoppers.domain.User;
-import com.bazlur.eshoppers.repository.JdbcCartItemRepositoryImpl;
-import com.bazlur.eshoppers.repository.JdbcCartRepositoryImpl;
-import com.bazlur.eshoppers.repository.JdbcProductRepositoryImpl;
 import com.bazlur.eshoppers.service.Action;
 import com.bazlur.eshoppers.service.CartService;
-import com.bazlur.eshoppers.service.CartServiceImpl;
 import com.bazlur.eshoppers.util.SecurityContext;
 import com.bazlur.eshoppers.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.inject.Inject;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,10 +20,8 @@ import java.io.IOException;
 public class CartServlet extends HttpServlet {
 	private static final Logger LOGGER = LoggerFactory.getLogger(CartServlet.class);
 
-	private CartService cartService
-					= new CartServiceImpl(new JdbcCartRepositoryImpl(),
-					new JdbcProductRepositoryImpl(),
-					new JdbcCartItemRepositoryImpl());
+	@Inject
+	private CartService cartService;
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)

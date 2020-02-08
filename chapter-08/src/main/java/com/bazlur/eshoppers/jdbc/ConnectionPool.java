@@ -27,8 +27,14 @@ public final class ConnectionPool {
 		config.setPassword(dbProp.getString("db.password"));
 		config.setDriverClassName(dbProp.getString("db.driver"));
 		var maxPoolSize
-							= dbProp.getString("db.max.connections");
+						= dbProp.getString("db.max.connections");
 		config.setMaximumPoolSize(Integer.parseInt(maxPoolSize));
+
+		// performance senstive settings
+		config.setMinimumIdle(0);
+		config.setConnectionTimeout(30000);
+		config.setIdleTimeout(35000);
+		config.setMaxLifetime(45000);
 
 		return new HikariDataSource(config);
 	}
