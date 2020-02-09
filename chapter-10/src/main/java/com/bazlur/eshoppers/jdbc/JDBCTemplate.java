@@ -1,10 +1,10 @@
 package com.bazlur.eshoppers.jdbc;
 
+import com.bazlur.eshoppers.tx.ConnectionHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
-import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -16,11 +16,11 @@ public class JDBCTemplate {
 					= LoggerFactory.getLogger(JDBCTemplate.class);
 
 	@Inject
-	private DataSource dataSource;
+	private ConnectionHolder connectionHolder;
 
 	public void updateQuery(String query, Object... parameters) {
-		try (var connection = dataSource.getConnection();
-				 var statement = connection.prepareStatement(query)) {
+		var connection = connectionHolder.getConnection();
+		try (var statement = connection.prepareStatement(query)) {
 
 			addParameters(statement, parameters);
 
@@ -32,8 +32,8 @@ public class JDBCTemplate {
 	}
 
 	public void query(String query, ThrowableConsumer<ResultSet> consumer) {
-		try (var connection = dataSource.getConnection();
-				 var statement = connection.prepareStatement(query)) {
+		var connection = connectionHolder.getConnection();
+		try (var statement = connection.prepareStatement(query)) {
 
 			consumer.accept(statement.executeQuery());
 
@@ -44,10 +44,10 @@ public class JDBCTemplate {
 	}
 
 	public long executeInsertQuery(String query, Object... parameters) {
-		try (var connection = dataSource.getConnection();
-				 var preparedStatement
+		var connection = connectionHolder.getConnection();
+		try (var preparedStatement
 								 = connection.prepareStatement(query,
-								 Statement.RETURN_GENERATED_KEYS)) {
+						Statement.RETURN_GENERATED_KEYS)) {
 			addParameters(preparedStatement, parameters);
 
 			final int affectedRows = preparedStatement.executeUpdate();
@@ -72,8 +72,8 @@ public class JDBCTemplate {
 
 	public <E> List<E> queryForObject(String query, Object primaryKey,
 																		ObjectRowMapper<E> objectRowMapper) {
-		try (var connection = dataSource.getConnection();
-				 var statement = connection.prepareStatement(query)) {
+		var connection = connectionHolder.getConnection();
+		try (var statement = connection.prepareStatement(query)) {
 
 			addParameters(statement, new Object[]{primaryKey});
 			var resultSet = statement.executeQuery();
@@ -92,9 +92,8 @@ public class JDBCTemplate {
 
 	public <E> List<E> queryForObject(String query,
 																		ObjectRowMapper<E> objectRowMapper) {
-
-		try (var connection = dataSource.getConnection();
-				 var statement = connection.prepareStatement(query)) {
+		var connection = connectionHolder.getConnection();
+		try (var statement = connection.prepareStatement(query)) {
 
 			var resultSet = statement.executeQuery(query);
 			List<E> listOfE = new ArrayList<>();
@@ -139,8 +138,8 @@ public class JDBCTemplate {
 	}
 
 	public void deleteById(String query, Long id) {
-		try (var connection = dataSource.getConnection();
-				 var statement = connection.prepareStatement(query)) {
+		var connection = connectionHolder.getConnection();
+		try (var statement = connection.prepareStatement(query)) {
 			statement.setLong(1, id);
 
 			statement.execute();

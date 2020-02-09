@@ -49,7 +49,7 @@ public class CartServiceImplTest {
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		cartService = new CartServiceImpl(cartRepository, productRepository, cartItemRepository);
+		cartService = new CartServiceImpl(cartRepository, productRepository, cartItemRepository, transactionTemplate);
 
 		cart = new Cart();
 

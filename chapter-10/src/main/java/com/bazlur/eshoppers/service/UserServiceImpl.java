@@ -5,6 +5,7 @@ import com.bazlur.eshoppers.dto.LoginDTO;
 import com.bazlur.eshoppers.dto.UserDTO;
 import com.bazlur.eshoppers.exceptions.UserNotFoundException;
 import com.bazlur.eshoppers.repository.UserRepository;
+import com.bazlur.eshoppers.tx.TransactionTemplate;
 
 import javax.inject.Inject;
 import java.nio.charset.StandardCharsets;
@@ -14,10 +15,12 @@ import java.security.NoSuchAlgorithmException;
 public class UserServiceImpl implements UserService {
 
 	private UserRepository userRepository;
+	private TransactionTemplate transactionTemplate;
 
 	@Inject
-	public UserServiceImpl(UserRepository userRepository) {
+	public UserServiceImpl(UserRepository userRepository, TransactionTemplate transactionTemplate) {
 		this.userRepository = userRepository;
+		this.transactionTemplate = transactionTemplate;
 	}
 
 	@Override
@@ -43,16 +46,21 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User verifyUser(LoginDTO loginDTO) {
-		var user = userRepository.findByUsername(loginDTO.getUsername())
-						.orElseThrow(() -> new UserNotFoundException("User not found by " + loginDTO.getUsername()));
+		return transactionTemplate.execute(() -> {
 
-		var encrypted = encryptPassword(loginDTO.getPassword());
-		if (user.getPassword().equals(encrypted)) {
+			var user = userRepository.findByUsername(loginDTO.getUsername())
+							.orElseThrow(() ->
+											new UserNotFoundException(
+															"User not found by " + loginDTO.getUsername()));
 
-			return user;
-		} else {
-			throw new UserNotFoundException("Incorrect username password");
-		}
+			var encrypted = encryptPassword(loginDTO.getPassword());
+			if (user.getPassword().equals(encrypted)) {
+
+				return user;
+			} else {
+				throw new UserNotFoundException("Incorrect username password");
+			}
+		});
 	}
 
 	private String encryptPassword(String password) {

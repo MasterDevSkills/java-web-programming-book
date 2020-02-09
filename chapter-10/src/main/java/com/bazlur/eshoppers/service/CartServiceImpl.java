@@ -9,26 +9,48 @@ import com.bazlur.eshoppers.exceptions.ProductNotFoundException;
 import com.bazlur.eshoppers.repository.CartItemRepository;
 import com.bazlur.eshoppers.repository.CartRepository;
 import com.bazlur.eshoppers.repository.ProductRepository;
-import com.bazlur.eshoppers.tx.ConnectionHolder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.bazlur.eshoppers.tx.TransactionTemplate;
 
 import javax.inject.Inject;
 import java.math.BigDecimal;
 import java.util.Optional;
 
 public class CartServiceImpl implements CartService {
-	private static final Logger LOGGER = LoggerFactory.getLogger(CartServiceImpl.class);
 
 	private final CartRepository cartRepository;
 	private final ProductRepository productRepository;
 	private final CartItemRepository cartItemRepository;
+	private final TransactionTemplate transactionTemplate;
 
 	@Inject
-	public CartServiceImpl(CartRepository cartRepository, ProductRepository productRepository, CartItemRepository cartItemRepository) {
+	public CartServiceImpl(CartRepository cartRepository,
+												 ProductRepository productRepository,
+												 CartItemRepository cartItemRepository,
+												 TransactionTemplate transactionTemplate) {
 		this.cartRepository = cartRepository;
 		this.productRepository = productRepository;
 		this.cartItemRepository = cartItemRepository;
+		this.transactionTemplate = transactionTemplate;
+	}
+
+	@Override
+	public void addProductToCart(String productId, Cart cart) {
+		transactionTemplate.execute(() -> {
+			Product product = findProduct(productId);
+
+			addProductToCart(product, cart);
+			updateCart(cart);
+		});
+	}
+
+	@Override
+	public void removeProductToCart(String productId, Cart cart) {
+		transactionTemplate.execute(() -> {
+			Product product = findProduct(productId);
+
+			removeProductToCart(product, cart);
+			updateCart(cart);
+		});
 	}
 
 	@Override
@@ -43,13 +65,6 @@ public class CartServiceImpl implements CartService {
 						.orElseGet(() -> createNewCart(currentUser));
 	}
 
-	@Override
-	public void addProductToCart(String productId, Cart cart) {
-		Product product = findProduct(productId);
-
-		addProductToCart(product, cart);
-		updateCart(cart);
-	}
 
 	private Product findProduct(String productId) {
 		if (productId == null || productId.length() == 0) {
@@ -62,13 +77,6 @@ public class CartServiceImpl implements CartService {
 										-> new ProductNotFoundException("Product not found by id: " + id));
 	}
 
-	@Override
-	public void removeProductToCart(String productId, Cart cart) {
-		Product product = findProduct(productId);
-
-		removeProductToCart(product, cart);
-		updateCart(cart);
-	}
 
 	private void updateCart(Cart cart) {
 		Integer totalTotalItem = getTotalItem(cart);
