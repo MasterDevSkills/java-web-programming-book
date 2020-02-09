@@ -5,10 +5,11 @@ import com.bazlur.eshoppers.domain.Order;
 import com.bazlur.eshoppers.domain.User;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class CartRepositoryImpl implements CartRepository {
 	private static final Map<User, LinkedHashSet<Cart>>
-					CARTS = new HashMap<>();
+					CARTS = new ConcurrentHashMap<>();
 
 	private OrderRepository orderRepository = new OrderRepositoryImpl();
 
