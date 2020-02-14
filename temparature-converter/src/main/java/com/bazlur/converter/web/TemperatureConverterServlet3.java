@@ -19,10 +19,10 @@ public class TemperatureConverterServlet3 extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        var temp = req.getParameter("temp");
+        var temperature = req.getParameter("temperature");
 
-        if (temp != null && temp.length() > 0) {
-            double temperatureInC = Double.parseDouble(temp);
+        if (temperature != null && temperature.length() > 0) {
+            double temperatureInC = Double.parseDouble(temperature);
             double temperatureInF = (temperatureInC * 9 / 5) + 32;
 
             req.setAttribute("result", temperatureInF);

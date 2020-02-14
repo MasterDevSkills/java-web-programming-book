@@ -7,7 +7,7 @@
 
         <h1>Celsius to Fahrenheit conversion</h1>
         <form method="post" action="/convert3">
-            <input type="number" name="temp"/>
+            <input type="number" name="temperature"/>
             <input type="submit" value="Submit"/>
         </form>
     </body>
