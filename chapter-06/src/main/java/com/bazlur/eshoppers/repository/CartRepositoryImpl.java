@@ -34,7 +34,7 @@ public class CartRepositoryImpl implements CartRepository {
 					Set<Order> orderByUser, Cart cart) {
 
 		return orderByUser.stream()
-						.noneMatch(order -> order.getCart().equals(cart));
+						.anyMatch(order -> order.getCart().equals(cart));
 	}
 
 	private Optional<Cart> getCart(User currentUser) {
