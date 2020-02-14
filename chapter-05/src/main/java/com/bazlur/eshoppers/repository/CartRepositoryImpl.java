@@ -3,15 +3,12 @@ package com.bazlur.eshoppers.repository;
 import com.bazlur.eshoppers.domain.Cart;
 import com.bazlur.eshoppers.domain.User;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class CartRepositoryImpl implements CartRepository {
-	private static final Map<User, LinkedHashSet<Cart>>
-					CARTS = new HashMap<>();
+	private static final Map<User, Set<Cart>>
+					CARTS = new ConcurrentHashMap<>();
 
 	@Override
 	public Optional<Cart> findByUser(User currentUser) {
