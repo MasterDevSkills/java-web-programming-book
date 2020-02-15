@@ -5,7 +5,6 @@ import com.bazlur.eshoppers.jdbc.JDBCTemplate;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.Optional;
 
 public class JdbcUserRepositoryImpl implements UserRepository {
@@ -41,8 +40,8 @@ public class JdbcUserRepositoryImpl implements UserRepository {
 						user.getUsername(),
 						user.getPassword(),
 						0L,
-						Timestamp.valueOf(user.getDateCreated()),
-						Timestamp.valueOf(user.getDateLastUpdated()),
+						(user.getDateCreated()),
+						(user.getDateLastUpdated()),
 						user.getEmail(),
 						user.getFirstName(),
 						user.getLastName()
