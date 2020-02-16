@@ -92,3 +92,5 @@ create table `order`
 		foreign key (user_id) references user (id)
 );
 
+INSERT INTO product (id, name, description, price, version, date_created, date_last_updated) VALUES (1, 'Google Pixel', 'Google Pixel 4 - Oh So Orange - 128GB - Unlocked', 699, 1, '2020-01-26 06:53:08', '2020-01-27 07:46:02');
+INSERT INTO product (id, name, description, price, version, date_created, date_last_updated) VALUES (2, 'Google Pixel 4 XL 1', 'Google Pixel 4 XL - Oh So Orange - 128GB - Unlocked', 999, 0, '2020-01-27 06:05:16', '2020-01-27 06:05:16');
